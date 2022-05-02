@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    .error {
+        color: red;
+    }
+  </style>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm//vega@5"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm//vega-lite@4.17.0"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm//vega-embed@6"></script>
+</head>
+<body>
+  <div id="vis"></div>
+  <script>
+    (function(vegaEmbed) {
+      var spec = {"config": {"view": {"continuousWidth": 400, "continuousHeight": 300}, "axis": {"labelFontSize": 14, "titleFontSize": 17}, "legend": {"labelFontSize": 17, "titleColor": "black", "titleFontSize": 17}, "title": {"align": "center", "anchor": "middle", "fontSize": 19}}, "vconcat": [{"mark": "bar", "encoding": {"color": {"field": "Sector", "scale": {"domain": ["Consumer Services", "Technology", "Health Care", "Finance", "Capital Goods", "Consumer Non-Durables", "Energy", "Basic Industries", "Public Utilities", "Miscellaneous", "Transportation", "Consumer Durables"]}, "type": "nominal"}, "tooltip": [{"field": "Sector", "title": "Sector", "type": "nominal"}, {"field": "count_mentioned", "title": "Mentions", "type": "quantitative"}], "x": {"field": "count_mentioned", "title": "The number of mentions", "type": "quantitative"}, "y": {"field": "Sector", "sort": {"field": "Sector", "op": "count", "order": "ascending"}, "title": "Sector", "type": "nominal"}}, "height": 300, "title": "Mentioned number of industries (Sector) in Reddit (r/stocks)", "width": 550}], "data": {"name": "data-518101f55f4b4acb602102d14ecf1c79"}, "$schema": "https://vega.github.io/schema/vega-lite/v4.17.0.json", "datasets": {"data-518101f55f4b4acb602102d14ecf1c79": [{"Sector": "Health Care", "count_mentioned": 728}, {"Sector": "Finance", "count_mentioned": 653}, {"Sector": "Technology", "count_mentioned": 602}, {"Sector": "Consumer Services", "count_mentioned": 547}, {"Sector": "Capital Goods", "count_mentioned": 345}, {"Sector": "Consumer Non-Durables", "count_mentioned": 181}, {"Sector": "Energy", "count_mentioned": 170}, {"Sector": "Basic Industries", "count_mentioned": 154}, {"Sector": "Public Utilities", "count_mentioned": 148}, {"Sector": "Miscellaneous", "count_mentioned": 131}, {"Sector": "Transportation", "count_mentioned": 96}, {"Sector": "Consumer Durables", "count_mentioned": 92}]}};
+      var embedOpt = {"mode": "vega-lite"};
+
+      function showError(el, error){
+          el.innerHTML = ('<div class="error" style="color:red;">'
+                          + '<p>JavaScript Error: ' + error.message + '</p>'
+                          + "<p>This usually means there's a typo in your chart specification. "
+                          + "See the javascript console for the full traceback.</p>"
+                          + '</div>');
+          throw error;
+      }
+      const el = document.getElementById('vis');
+      vegaEmbed("#vis", spec, embedOpt)
+        .catch(error => showError(el, error));
+    })(vegaEmbed);
+
+  </script>
+</body>
+</html>
