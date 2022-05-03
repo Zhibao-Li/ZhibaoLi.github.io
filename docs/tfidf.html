@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    .error {
+        color: red;
+    }
+  </style>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm//vega@5"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm//vega-lite@4.17.0"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm//vega-embed@6"></script>
+</head>
+<body>
+  <div id="vis"></div>
+  <script>
+    (function(vegaEmbed) {
+      var spec = {"config": {"view": {"continuousWidth": 400, "continuousHeight": 300}, "axis": {"labelFontSize": 14, "titleFontSize": 17}, "title": {"align": "center", "anchor": "middle", "fontSize": 19}}, "vconcat": [{"mark": "bar", "encoding": {"color": {"value": "#6497b1"}, "tooltip": {"field": "count", "title": "Count", "type": "quantitative"}, "x": {"axis": {"labelAngle": 320}, "field": "word", "sort": "-y", "title": "Word", "type": "ordinal"}, "y": {"axis": {"grid": false}, "field": "count", "title": "TF-IDF-Count", "type": "quantitative"}}, "height": 300, "selection": {"selector019": {"type": "interval", "bind": "scales", "encodings": ["x", "y"]}}, "width": 550}], "data": {"name": "data-89fd6e916150efbfa5ff5ca909137f30"}, "$schema": "https://vega.github.io/schema/vega-lite/v4.17.0.json", "datasets": {"data-89fd6e916150efbfa5ff5ca909137f30": [{"word": "buy", "count": 31748}, {"word": "stock", "count": 26445}, {"word": "go", "count": 25269}, {"word": "like", "count": 19541}, {"word": "good", "count": 16838}, {"word": "thank", "count": 16547}, {"word": "dont", "count": 16193}, {"word": "sell", "count": 15401}, {"word": "market", "count": 13900}, {"word": "people", "count": 11219}, {"word": "share", "count": 11218}, {"word": "lol", "count": 11189}, {"word": "company", "count": 11132}, {"word": "money", "count": 10980}, {"word": "time", "count": 10739}, {"word": "hold", "count": 9693}, {"word": "price", "count": 8910}, {"word": "long", "count": 8851}, {"word": "invest", "count": 7978}, {"word": "yes", "count": 7929}]}};
+      var embedOpt = {"mode": "vega-lite"};
+
+      function showError(el, error){
+          el.innerHTML = ('<div class="error" style="color:red;">'
+                          + '<p>JavaScript Error: ' + error.message + '</p>'
+                          + "<p>This usually means there's a typo in your chart specification. "
+                          + "See the javascript console for the full traceback.</p>"
+                          + '</div>');
+          throw error;
+      }
+      const el = document.getElementById('vis');
+      vegaEmbed("#vis", spec, embedOpt)
+        .catch(error => showError(el, error));
+    })(vegaEmbed);
+
+  </script>
+</body>
+</html>
