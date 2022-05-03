@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Exploratory Data Analysis</title>
+
+<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/yeti.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">My Website</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Introduction</a>
+</li>
+<li>
+  <a href="EDA.html">EDA</a>
+</li>
+<li>
+  <a href="NLP.html">NLP</a>
+</li>
+<li>
+  <a href="ML.html">Maching Learning</a>
+</li>
+<li>
+  <a href="Conclusion.html">Conclusion</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+<div class="upper-right-logo"> </div>
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore"><strong>Exploratory Data Analysis</strong></h1>
+
+</div>
+
+<div id="TOC">
+<ul>
+<li><a href="#overview"><strong>1. Overview</strong></a></li>
+<li><a href="#findings-and-visualizations"><strong>2. Findings and Visualizations</strong></a></li>
+<li><a href="#source"><strong>3. Source</strong></a></li>
+</ul>
+</div>
+
+<div id="overview" class="section level2">
+<h2><strong>1. Overview</strong></h2>
+<p>
+First, I check the basic information of the data such as the size of data, the NA in columns, statistical distribution of some important variables. Second, I do data munging, creating a new dataset that only includes variables needed for analysis. Also, I try to identify stocks mentioned in each comment of Reddit. Third, I create some visualizations and tables to response business questions, including the Top 10 stocks and their market capital, industries and countries of stocks mentioned.<br><br>So far, I have got some interesting results:
+</p>
+<ul>
+<li>GME, and Tesla are mentioned most in these comments.</li>
+<li>In the top 10 mentioned stocks, there are 3 big name companies, Tesla, Apple, and Microsoft, while there are still 7 small companies with low market value, which may be the opportunities for investors.</li>
+<li>Popular industries mentioned are healthcare, Finance, Technology, and Consumer Service.</li>
+<li>most stocks mentioned in comments are in United States, followed by Canada, China, and Israel. <br></li>
+</ul>
+</div>
+<div id="findings-and-visualizations" class="section level2">
+<h2><strong>2. Findings and Visualizations</strong></h2>
+<div id="basic-information-of-datasets" class="section level5">
+<h5><strong>2.1 Basic information of datasets</strong></h5>
+<img src="1.png" />
+<p align="center">
+<font size="3">Figure 1    Stock Subreddit Comment Dataset</font>
+</p>
+<p>
+Figure 1 shows that there are 16 columns (attributes) and 2258805 rows (observations) in the stock subreddit comment dataset after basic data cleaning (data collected from July 2019 to June 2021 ). Each row is an observation of comment in stock subreddit, the attributes include the comment itself like date the comment posted and the comment text. Also, it provides information about user who posts the comment such as whether the author is premium, and date of the author created.<br> One more to mention is that a new column is created to store the stock ticker found in the comment (body), as the last column shown in the figure.<br><br>Important Concept or Variable Explanation in Reddit Context:
+</p>
+<ul>
+<li>Reddit: An American social news aggregation, web content rating, and discussion website.<br>       Registered members submit content to the site such as links, text posts, images, and <br>       videos, which are then voted up or down by other members.</li>
+<li>link: Main post</li>
+<li>Comment: Link’s comment or comments’ comment</li>
+<li>Submission: Comment/link</li>
+<li>Link_id: Id of link</li>
+<li>Parent_id: ID of the thing this comment is a reply to, either the link or a comment in it</li>
+<li>Created_utc: Date of submission/comment created</li>
+<li>Score: Upvotes of the comment received minus downvotes</li>
+<li>No_follow: Whether the submission is followed by others or not</li>
+<li>Total_awards_received: Redditors give each other awards as a way to recognize and react to<br>       each other’s contributions.</li>
+<li>Gild: A comment is gilded means that someone gave the poster 1 month of reddit gold for the post (indicates the comment is really good)</li>
+<li>Gilded: The number of times this comment received reddit gold</li>
+<li>Sticked: Whether the post is sticked</li>
+<li>Controversiality: Whether the comment is controversial (0 or 1)</li>
+<li>Is_submitter: Whether a comment author is also the author of the submission</li>
+<li>Author_created_utc: Date of author’s account created</li>
+</ul>
+<p><br></p>
+<img src="2.png" />
+<p align="center">
+<font size="3">Figure 2    NASDAQ/NYSE/AMEX Stocks Dataset (8440 stocks)<br><a href="https://www.nasdaq.com/market-activity/stocks/screener" class="uri">https://www.nasdaq.com/market-activity/stocks/screener</a></font>
+</p>
+<p>
+Besides the reddit data, NASDAQ/NYSE/AMEX stocks dataset is used in the analysis. Figure 2 shows attributes about the stocks mentioned in the comments. Attributes include counts that stock mentioned in subreddit comments from July 2019 to June 2021, recent stock price in last sale, market capital, the industry the company belongs to, etc.
+</p>
+</div>
+<div id="top-10-stocks-mentioned" class="section level5">
+<h5><strong>2.2: Top 10 stocks mentioned</strong></h5>
+<iframe src="top10_stocks.html" height="405" width="900" style="border: 1px solid #464646;" allowfullscreen allow="autoplay" data-external="1">
+</iframe>
+<p align="center">
+<font size="3">Figure 3    Top 10 stocks mentioned in Reddit</font>
+</p>
+<iframe src="Market Cap.html" height="450" width="900" style="border: 1px solid #464646;" allowfullscreen allow="autoplay" data-external="2">
+</iframe>
+<p align="center">
+<font size="3">Figure 4    Market Capital of top 10 stocks mentioned in Reddit<br> Users could interactive with the plot (click, zoom in/out, move mouse)</font>
+</p>
+<p>
+As figure 3 shows, GME, and Tesla are mentioned most in these comments. <br>Also, from figure 4, there are 3 big name companies, Tesla, Apple, and Microsoft in the top 10 mentioned stocks, while there are still 7 small companies with low market value, which may be the opportunities for investors.
+</p>
+<p>
+<font size="3.5"><strong>Methodology</strong><br><em>Use ApeWisdom stock detection method: <a href="https://apewisdom.io/methodology/" class="uri">https://apewisdom.io/methodology/</a><br> Detect tickers in a comment or submission if they are written in uppercase letters. For example: AMD, BTC, AAPL, or if they are preceeded with a dollar sign. For example: $aapl, $AAPL, $btc.<br> If a ticker is present two or more times in a submission or a comment this will still be counted as a single mention. This can lead to some issues, as there are stocks/cryptos with tickers such as CFO, or YOLO. In such case only <span class="math inline">\(CFO/\)</span>cfo and <span class="math inline">\(yolo/\)</span>YOLO will be counted.</em></font>
+</p>
+</div>
+<div id="top-sectors-and-industries-mentioned-in-reddit" class="section level5">
+<h5>2.3: Top sectors and industries mentioned in Reddit</h5>
+<iframe src="sector.html" height="405" width="1000" style="border: 1px solid #464646;" allowfullscreen allow="autoplay" data-external="3">
+</iframe>
+<p align="center">
+<font size="3">Figure 5    Top sectors mentioned in Reddit</font>
+</p>
+<iframe src="industry.html" height="450" width="1000" style="border: 1px solid #464646;" allowfullscreen allow="autoplay" data-external="4">
+</iframe>
+<p align="center">
+<font size="3">Figure 6    Top industries mentioned in Reddit</font>
+</p>
+<p>
+Both sector an industry means the industry in different detailed level. From figure 5 and 6, we could find that popular sectors mentioned are healthcare, Finance, Technology, and Consumer Service. <br>More specifically, biotechnology pharmaceutical preparation, real estate investment trusts, EDP services, prepackaging software are mentioned most in terms of industries.
+</p>
+</div>
+<div id="top-countries-mentioned-in-reddit" class="section level5">
+<h5>2.4: Top countries mentioned in Reddit</h5>
+<iframe src="country.html" height="880" width="900" style="border: 1px solid #464646;" allowfullscreen allow="autoplay" data-external="5">
+</iframe>
+<p align="center">
+<font size="3">Figure 7    Top countries mentioned in Reddit</font>
+</p>
+<p>
+Figure 7 shows the industries distribution in more specific level. Obviously, most stocks mentioned in comments are in United States, followed by Canada, China, and Israel.<br> To be honestly, I am surprised about Israel.
+</p>
+</div>
+</div>
+<div id="source" class="section level2">
+<h2><strong>3. Source</strong></h2>
+<p><a href="project_starter.html">Project Starter</a> <br> <a href="step1_basic_information.html">Step 1: Basic Information</a> <br> <a href="step2_data_munging.html">Step 2: Data Munging</a> <br> <a href="step3_visualizations.html">Step 3: Finding and Visualizations</a> <br> <br></p>
+</div>
+
+<p>Copyright &copy; ZhibaoLi, Graduate of Data Science and Analytics, Georgetown University. All rights reserved.</p>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

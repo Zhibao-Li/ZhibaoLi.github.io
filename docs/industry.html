@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    .error {
+        color: red;
+    }
+  </style>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm//vega@5"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm//vega-lite@4.17.0"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm//vega-embed@6"></script>
+</head>
+<body>
+  <div id="vis"></div>
+  <script>
+    (function(vegaEmbed) {
+      var spec = {"config": {"view": {"continuousWidth": 400, "continuousHeight": 300}, "axis": {"labelFontSize": 12, "titleFontSize": 17}, "legend": {"labelFontSize": 13, "titleColor": "black", "titleFontSize": 17}, "title": {"align": "center", "anchor": "middle", "fontSize": 19}}, "vconcat": [{"mark": "bar", "encoding": {"color": {"field": "Industry", "scale": {"domain": ["Biotechnology: Pharmaceutical Preparations", "Real Estate Investment Trusts", "EDP Services", "Computer Software: Prepackaged Software", "Investment Managers", "Industrial Machinery/Components", "Oil & Gas Production", "Major Banks", "Semiconductors", "Biotechnology: Biological Products (No Diagnostic Substances)", "Business Services", "Finance/Investors Services", "Telecommunications Equipment", "Trusts Except Educational Religious and Charitable", "Medical/Dental Instruments", "Diversified Commercial Services", "Specialty Chemicals", "Other Consumer Services", "Medical Specialities", "Industrial Specialties"]}, "type": "nominal"}, "tooltip": [{"field": "Industry", "title": "Industry", "type": "nominal"}, {"field": "count_mentioned", "title": "Mentions", "type": "quantitative"}], "x": {"field": "count_mentioned", "title": "The number of mentions", "type": "quantitative"}, "y": {"field": "Industry", "sort": {"field": "Industry", "op": "count", "order": "ascending"}, "title": "Industry", "type": "nominal"}}, "height": 350, "title": "Top 20 mentioned industries in Reddit (r/stocks)", "width": 550}], "data": {"name": "data-4156b193a36de453aa241ac85e079445"}, "$schema": "https://vega.github.io/schema/vega-lite/v4.17.0.json", "datasets": {"data-4156b193a36de453aa241ac85e079445": [{"Industry": "Biotechnology: Pharmaceutical Preparations", "count_mentioned": 376}, {"Industry": "Real Estate Investment Trusts", "count_mentioned": 192}, {"Industry": "EDP Services", "count_mentioned": 184}, {"Industry": "Computer Software: Prepackaged Software", "count_mentioned": 138}, {"Industry": "Investment Managers", "count_mentioned": 113}, {"Industry": "Industrial Machinery/Components", "count_mentioned": 113}, {"Industry": "Oil & Gas Production", "count_mentioned": 106}, {"Industry": "Major Banks", "count_mentioned": 89}, {"Industry": "Semiconductors", "count_mentioned": 84}, {"Industry": "Biotechnology: Biological Products (No Diagnostic Substances)", "count_mentioned": 82}, {"Industry": "Business Services", "count_mentioned": 78}, {"Industry": "Finance/Investors Services", "count_mentioned": 76}, {"Industry": "Telecommunications Equipment", "count_mentioned": 72}, {"Industry": "Trusts Except Educational Religious and Charitable", "count_mentioned": 68}, {"Industry": "Medical/Dental Instruments", "count_mentioned": 58}, {"Industry": "Diversified Commercial Services", "count_mentioned": 51}, {"Industry": "Specialty Chemicals", "count_mentioned": 50}, {"Industry": "Other Consumer Services", "count_mentioned": 49}, {"Industry": "Medical Specialities", "count_mentioned": 48}, {"Industry": "Industrial Specialties", "count_mentioned": 45}]}};
+      var embedOpt = {"mode": "vega-lite"};
+
+      function showError(el, error){
+          el.innerHTML = ('<div class="error" style="color:red;">'
+                          + '<p>JavaScript Error: ' + error.message + '</p>'
+                          + "<p>This usually means there's a typo in your chart specification. "
+                          + "See the javascript console for the full traceback.</p>"
+                          + '</div>');
+          throw error;
+      }
+      const el = document.getElementById('vis');
+      vegaEmbed("#vis", spec, embedOpt)
+        .catch(error => showError(el, error));
+    })(vegaEmbed);
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Machine Learning</title>
+
+<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/yeti.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">My Website</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Introduction</a>
+</li>
+<li>
+  <a href="EDA.html">EDA</a>
+</li>
+<li>
+  <a href="NLP.html">NLP</a>
+</li>
+<li>
+  <a href="ML.html">Maching Learning</a>
+</li>
+<li>
+  <a href="Conclusion.html">Conclusion</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+<div class="upper-right-logo"> </div>
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Machine Learning</h1>
+
+</div>
+
+<div id="TOC">
+<ul>
+<li><a href="#part-1-what-i-do-in-this-section">Part 1: What I do in this section?</a></li>
+<li><a href="#part-2-data-cleaning-and-feature-engineering">Part 2: Data Cleaning and Feature engineering</a></li>
+<li><a href="#part-3-the-prediction-of-score-q1">Part 3: The Prediction of Score (Q1)</a></li>
+<li><a href="#part-4-the-classification-of-follows-q2">Part 4: The Classification of Follows (Q2)</a></li>
+<li><a href="#part-5-code-source">Part 5: Code Source</a></li>
+</ul>
+</div>
+
+<div id="part-1-what-i-do-in-this-section" class="section level2">
+<h2>Part 1: What I do in this section?</h2>
+<br>
+<p>
+There are many factors that make a comment popular or unpopular, like whether the comment is post by the submitter, whether the comment is positive, and when the comment post. It is interesting to use machine learning methods to answer the questions. <br><br> Overall, this part is aimed to explore the factors that affect the score (upvote and downvote) and follows of comments in Reddit. Specifically, one task is to predict the score, another one is to classify the comment based whether the comment is followed. <br> <br>Technically, for the score prediction task, linear regression, decision tree regression, and gradient-boosted trees model are used. For the classification of follow, logistic regression, random forest, and gradient-boosted trees model are used. All models except gradient-boosted trees are tuned with cross-validation.<br><br>From the result, we could find the gilds, awards, follows that the comment received influence the score of comments most. In this task, decision tree regression (CV) performs best (R square = 0.26). For another question, much more factors are significant for whether the comment is followed by others. Besides the factors mentioned above, whether the comment is posted by the submitter, whether the comment is sticked, whether the author is premium, and whether the comment is post on weekend are matters in this question.
+</p>
+<p><br> <br></p>
+</div>
+<div id="part-2-data-cleaning-and-feature-engineering" class="section level2">
+<h2>Part 2: Data Cleaning and Feature engineering</h2>
+<br>
+<p>
+First, 3 variables are transformed, including the weekend (0/1, depends on the post date of comments), the account days (2021-06-30 minus the date of author created), sentiment of the comment. <br><br> Second, all variables are converted to appropriate type. <br> <br>Third, NA and duplicate rows are removed. <br><br>Finally, cleaned data frame is stored into S3
+</p>
+<p><br> <br></p>
+</div>
+<div id="part-3-the-prediction-of-score-q1" class="section level2">
+<h2>Part 3: The Prediction of Score (Q1)</h2>
+<p><br></p>
+<div id="feature-selection" class="section level4">
+<h4>3.1 Feature Selection</h4>
+<br>
+<p>
+Put all variables into Linear regression model.<br><br> After running the pipeline model, coefficients show that there are 5 variables that affect the comments’ score most: <br>whether the comment is gilded<br>how many gilds that the comment received<br>total awards that the comment received<br>whether the comment is awarded<br>whether the comment is posted by the submitter<br><br>Therefore, the subset includes these 5 features and score are selected into a new dataset, and split it to train (0.9) and test set (0.1).
+</p>
+<p><br></p>
+<p><img src="coefficients1.png" /> <br></p>
+</div>
+<div id="model-selection" class="section level4">
+<h4>3.2 Model Selection</h4>
+<br>
+<p>
+5 models including linear regression, linear regression (CV), decision tree regression, decision tree regression (CV) and gradient-boosted trees model are trained. .<br><br> For convenience, pipeline models are used in these 5 models. <br><br>Specifically, cross-validation is used to do parameters tuning.<br><br>The RMSE and R2 of test set is used to evaluate the fitting result. <br><br>Also, models are saved into S3 after they are trained for better reuse, especially for cross-validation models.
+</p>
+<p><br></p>
+</div>
+<div id="result" class="section level4">
+<h4>3.3 Result</h4>
+<br>
+<p>
+In these 5 models, Decision Tree Regression (CV) model is the best with r2(0.261) and RMSE (42.816)
+</p>
+<p><br></p>
+<p><img src="Prediction.png" /></p>
+<p><br> <br></p>
+</div>
+</div>
+<div id="part-4-the-classification-of-follows-q2" class="section level2">
+<h2>Part 4: The Classification of Follows (Q2)</h2>
+<p><br></p>
+<div id="feature-selection-1" class="section level4">
+<h4>4.1 Feature Selection</h4>
+<br>
+<p>
+Similarly, put all variables into Logistic regression model.<br><br> After running the pipeline model, coefficients show that there are 9 variables that affect the comments’ score significantly: <br>whether the comment is awarded, total awards that the comment received<br> whether the comment is gilded<br> how many gilds that the comment received<br> the score (upvotes) of the comment<br> whether the comment is posted by the submitter<br> whether the comment is sticked<br> whether the author is premium<br> whether the comment is post on weekend<br><br>Therefore, the subset includes these 9 features and score are selected into a new dataset, and split it to train (0.9) and test set (0.1).
+</p>
+<p><br></p>
+<p><img src="coefficients2.png" /></p>
+<p><br></p>
+</div>
+<div id="model-selection-1" class="section level4">
+<h4>4.2 Model Selection</h4>
+<br>
+<p>
+5 classifers including logistic regression, logistic regression (CV), random forest, random forest (CV), and gradient-boosted trees model are trained. .<br><br> For convenience, pipeline models are used in these 5 models. <br><br>Specifically, cross-validation is used to do parameters tuning.<br><br>The accuracy and AUC (area under the ROC curve) of test set is used to evaluate the fitting result because the label is imbalanced (more than 1200000 comments that not are followed, but about 550000 comments that are followed) <br><br>Also, models are saved into S3 after they are trained for better reuse, especially for cross-validation models.
+</p>
+<p><br></p>
+</div>
+<div id="result-1" class="section level4">
+<h4>4.3 Result</h4>
+<br>
+<p>
+In these 5 models, Gradient-Boosted Trees (GBT) model is the best with accuracy (0.877) and AUC (0.856)
+</p>
+<p><br></p>
+<p><img src="Classification.png" /></p>
+<p><br></p>
+</div>
+</div>
+<div id="part-5-code-source" class="section level2">
+<h2>Part 5: Code Source</h2>
+<p><br> <a href="Data_Cleaning.html">Data Cleaning and Feature Engineering</a> <br> <a href="ML1.html">Q1: The Prediction of Score</a> <br> <a href="ML2.html">Q2: The Classification of Follow</a> <br> <br> <br></p>
+</div>
+
+<p>Copyright &copy; ZhibaoLi, Graduate of Data Science and Analytics, Georgetown University. All rights reserved.</p>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>NLP</title>
+
+<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/yeti.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">My Website</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Introduction</a>
+</li>
+<li>
+  <a href="EDA.html">EDA</a>
+</li>
+<li>
+  <a href="NLP.html">NLP</a>
+</li>
+<li>
+  <a href="ML.html">Maching Learning</a>
+</li>
+<li>
+  <a href="Conclusion.html">Conclusion</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+<div class="upper-right-logo"> </div>
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">NLP</h1>
+
+</div>
+
+<div id="TOC">
+<ul>
+<li><a href="#overview"><strong>1. Overview</strong></a></li>
+<li><a href="#findings-and-visualizations"><strong>2. Findings and Visualizations</strong></a></li>
+<li><a href="#source"><strong>3. Source</strong></a></li>
+</ul>
+</div>
+
+<div id="overview" class="section level2">
+<h2><strong>1. Overview</strong></h2>
+<p>
+In this section, I plan to extract some meaningful keywords from comments, conduct sentiment analysis for the whole comments and specific stocks with natural language processing (NLP) method.<br><br> Specifically, text is cleaned using John Snow Labs NLP models first. Cleaning operation includes removing stop words, stemming, lemmatizing, and removing unusual characters. <br>Secondly, basic data text analysis is conducted like the most common words in these comments, the distribution of text lengths, the important words in terms of TF-IDF (Term Frequency Inverse Document Frequency). <br>Third, 2 dummy variables are created to identify whether the comment contains stocks, and whether the stocks mentioned belong to Top20 stocks mentioned.<br><br>After finishing these basic data processing and cleaning, graphs and tables for the sentiment results of top 20 stocks mentioned in Reddit’s comments, and the market trend with time are created. <br><br>Some Findings Quick Look:
+</p>
+<ul>
+<li>“Buy” is mentioned much more than “Sell” in comments from July 2019 to June 2021</li>
+<li>Text length for most comments is from 0 to 50 words, but 140 to 150 words is another small peak</li>
+<li>DuPoint, a healthecare company may be a good choice for buying, while AMC is not based on sentiment analysis<br />
+</li>
+<li>People feel better about the market from March 2020 to March 2021, compared with period before March 2020</li>
+<li>Comment sentiment change for TESLA is similar to its stock price trend <br></li>
+</ul>
+</div>
+<div id="findings-and-visualizations" class="section level2">
+<h2><strong>2. Findings and Visualizations</strong></h2>
+<div id="most-common-words-in-comments" class="section level5">
+<h5>2.1 Most common words in comments</h5>
+<img src="wordcloud1.png" />
+<p align="center">
+<font size="3">Figure 1    Word Cloud of Stock Subreddit Comments (based on counts)</font>
+</p>
+<p>
+Figure 1 demonstrates popular key words in stock subreddit comments based on occurrence frequency of each word. “stock”, “go”, “buy” are mentioned most in these comments, which make sense in the stock context. <br> Also, “market” is mentioned more than 250000 times, which indicates users are passionate about talking about topics about market in this reddit and these comments could provide a lot of market information for us.<br>Interestingly, “Buy” is mentioned much more than “Sell” in comments from July 2019 to June 2021 which may indicate investors tend to feel optimistic about stock market from July 2019 to June 2021
+</p>
+</div>
+<div id="important-words-according-to-tf-idf" class="section level5">
+<h5>2.2 Important words according to TF-IDF</h5>
+<p align="center">
+<iframe src="tfidf.html" height="420" width="700" style="border: 1px solid #464646;" allowfullscreen allow="autoplay" data-external="3">
+</iframe>
+</p>
+<p align="center">
+<font size="3">Figure 4    Word Cloud of Stock Subreddit Comments (based on TF-IDF)</font>
+</p>
+<p>
+Figure 2 displays important words in these comments based on TF-IDF. TF-IDF (term frequency-inverse document frequency) quantifies the importance or relevance of string representations (words, phrases, lemmas, etc) in a document amongst a collection of documents, which could help to find important words in a certain comment by minimize the weighting of frequent terms in all comments like “of”, “as”, “the”.<br> In this case, “buy” ranks top 1, even more than “stock”, which provides strong evidence that most users feel optimistic about stock market.
+</p>
+</div>
+<div id="distribution-of-text-lengths" class="section level5">
+<h5>2.3: Distribution of text lengths</h5>
+<p align="center">
+<iframe src="textlength.html" height="390" width="700" style="border: 1px solid #464646;" allowfullscreen allow="autoplay" data-external="3">
+</iframe>
+</p>
+<p align="center">
+<font size="3">Figure 3    Distribution of Comment Text Length in Stock Subreddit</font>
+</p>
+<p>
+Figure 3 indicates that most text length is from 0 to 50 words, and there is an obvious decreasing trend for counts with text length increasing. <br> However, there is another sight increase for comments whose text length is between 140 and 150 words. The reason for this phenomenon is still needed to explore.
+</p>
+</div>
+<div id="dummy-variables" class="section level5">
+<h5>2.4: Dummy variables</h5>
+<img src="4.png" />
+<p align="center">
+<font size="3">Figure 4    Screenshot of Dataset with Dummy Variables</font>
+</p>
+<p>
+Figure 4 shows 2 dummy varibales added into the dataset based whether the comment mentions stocks, and whether the stock mentioned belongs to the Top 20 stocks mentioned most
+</p>
+</div>
+<div id="sentiment-analysis-for-the-whole-market" class="section level5">
+<h5>2.5: Sentiment Analysis for the Whole Market</h5>
+<p align="center">
+<iframe src="overbull.html" height="410" width="680" style="border: 1px solid #464646;" allowfullscreen allow="autoplay" data-external="3">
+</iframe>
+</p>
+<p align="center">
+<font size="3">Figure 5    Sentiment Change of Comments in Stock Subreddit</font>
+</p>
+<p>
+The red line means the average sentiment values in this period. Generally, users tend to feel optimistic about the market in most of time based on figure 5. <br> In more detailed level, People are more likely to feel positive about the market from March 2020 to March 2021, compared with period before March 2020
+</p>
+</div>
+<div id="sentiment-analysis-for-top-20-stocks-mentioned" class="section level5">
+<h5>2.6: Sentiment Analysis for Top 20 stocks mentioned</h5>
+<p align="center">
+<iframe src="top20sentiments.html" height="405" width="780" style="border: 1px solid #464646;" allowfullscreen allow="autoplay" data-external="3">
+</iframe>
+</p>
+<p align="center">
+<font size="3">Figure 6    Sentiment Analysis for Top 20 stocks mentioned in Stock Subreddit</font>
+</p>
+<p>
+From figure 6, a fact is that discussions about GameStop (GME) mix with positive and negative comments, while TESLA (TSLA), and DuPoint (DD) gain more positive comments<br>Additionally, DuPoint, a healthecare company may be a good choice for buying. Most people feel good about it. However, AMC is not because of the opposite sentiments.
+</p>
+<p><br></p>
+<p align="center">
+<iframe src="complex20.html" height="470" width="780" style="border: 1px solid #464646;" allowfullscreen allow="autoplay" data-external="3">
+</iframe>
+</p>
+<p align="center">
+<font size="3">Figure 7    Sentiment Change for Top 20 stocks mentioned in Stock Subreddit</font>
+</p>
+<p>
+Figure 7 is complementary to figure 6, showing the change of sentiment with time for these stocks<br>From the plot, February 2021 seems a shape turning point with the fact that the sentiment distinction for these 20 stocks becomes significant. It may be caused by the lack of data after this moment, but it sill needs to be explored.
+</p>
+</div>
+<div id="sentiment-analysis-for-tesla" class="section level5">
+<h5>2.7: Sentiment Analysis for Tesla</h5>
+<p align="center">
+<img src="te.svg" />
+</p>
+<p align="center">
+<font size="3">Figure 8    Sentiment and Stock Price Change for Tesla</font>
+</p>
+<p>
+Finally, I dive into the analysis for Tesla, one of reasons is it is mentioned most in this forum, another one is Tesla is a highly famous company recently. <br>In order to find the relationship between sentiment of comments about Tesla and its stock price, their changes are put in one plot. Because of different scale of stock price and sentiment values, standardization is conducted for both stock price and sentiment values. From figure 8, we could find sentiment change of comments for Tesla is similar to its stock price, especially for the period between July 2019 and August 2020. Also, both sentiment values and stock price increase shapely during 2021 February. <br>In the other hand, sentiment value of comments change more violently than stock price.
+</p>
+<p><br></p>
+</div>
+</div>
+<div id="source" class="section level2">
+<h2><strong>3. Source</strong></h2>
+<p><br> <a href="NLP_updated.html">NLP Code</a> <br> <br></p>
+</div>
+
+<p>Copyright &copy; ZhibaoLi, Graduate of Data Science and Analytics, Georgetown University. All rights reserved.</p>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
