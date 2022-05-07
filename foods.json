@@ -6,18 +6,6 @@
     ]
   },
   {  
-    "key":"Beer",
-    "values":[  
-  {"category":"Beer","aspect":"Food","value":0.1785},{"category":"Beer","aspect":"Service","value":0.4252},{"category":"Beer","aspect":"Environment","value":0.5898},{"category":"Beer","aspect":"Variety","value":0.3032},{"category":"Beer","aspect":"Drink","value":0.1865},{"category":"Beer","aspect":"Sauce","value":0.1013}
-    ]
-  },
-  {  
-    "key":"Others",
-    "values":[  
-{"category":"Others","aspect":"Food","value":0.2062},{"category":"Others","aspect":"Service","value":0.2995},{"category":"Others","aspect":"Environment","value":0.3491},{"category":"Others","aspect":"Variety","value":0.2979},{"category":"Others","aspect":"Drink","value":0.0889},{"category":"Others","aspect":"Sauce","value":0.1295}
-    ]
-  },
-  {  
     "key":"Pizza",
     "values":[  
   {"category":"Pizza","aspect":"Food","value":0.2002},{"category":"Pizza","aspect":"Service","value":0.4238},{"category":"Pizza","aspect":"Environment","value":0.3863},{"category":"Pizza","aspect":"Variety","value":0.1757},{"category":"Pizza","aspect":"Drink","value":0.1005},{"category":"Pizza","aspect":"Sauce","value":0.0213}
