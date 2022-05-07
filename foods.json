@@ -12,15 +12,9 @@
     ]
   },
   {  
-    "key":"Desserts",
-    "values":[  
-  {"category":"Desserts","aspect":"Food","value":0.1045},{"category":"Desserts","aspect":"Service","value":0.3835},{"category":"Desserts","aspect":"Environment","value":0.4067},{"category":"Desserts","aspect":"Variety","value":0.2795},{"category":"Desserts","aspect":"Drink","value":0.0826},{"category":"Desserts","aspect":"Sauce","value":0.1432}
-    ]
-  },
-  {  
     "key":"Others",
     "values":[  
-  {"category":"Others","aspect":"Food","value":0.1965},{"category":"Others","aspect":"Service","value":0.2946},{"category":"Others","aspect":"Environment","value":0.3524},{"category":"Others","aspect":"Variety","value":0.2993},{"category":"Others","aspect":"Drink","value":0.0899},{"category":"Others","aspect":"Sauce","value":0.1195}
+{"category":"Others","aspect":"Food","value":0.2062},{"category":"Others","aspect":"Service","value":0.2995},{"category":"Others","aspect":"Environment","value":0.3491},{"category":"Others","aspect":"Variety","value":0.2979},{"category":"Others","aspect":"Drink","value":0.0889},{"category":"Others","aspect":"Sauce","value":0.1295}
     ]
   },
   {  
@@ -30,27 +24,9 @@
     ]
   },
   {  
-    "key":"Salad",
-    "values":[  
-  {"category":"Salad","aspect":"Food","value":0.121},{"category":"Salad","aspect":"Service","value":0.3067},{"category":"Salad","aspect":"Environment","value":0.5333},{"category":"Salad","aspect":"Variety","value":0.2164},{"category":"Salad","aspect":"Drink","value":0.0125},{"category":"Salad","aspect":"Sauce","value":0.2699}
-    ]
-  },
-  {  
-    "key":"Sandwiches",
-    "values":[  
-  {"category":"Sandwiches","aspect":"Food","value":0.406},{"category":"Sandwiches","aspect":"Service","value":0.2996},{"category":"Sandwiches","aspect":"Environment","value":0.4183},{"category":"Sandwiches","aspect":"Variety","value":0.287},{"category":"Sandwiches","aspect":"Drink","value":-0.0035},{"category":"Sandwiches","aspect":"Sauce","value":0.2937}
-    ]
-  },
-  {  
     "key":"Seafood",
     "values":[  
   {"category":"Seafood","aspect":"Food","value":0.2166},{"category":"Seafood","aspect":"Service","value":0.2765},{"category":"Seafood","aspect":"Environment","value":0.3558},{"category":"Seafood","aspect":"Variety","value":0.3002},{"category":"Seafood","aspect":"Drink","value":0.1171},{"category":"Seafood","aspect":"Sauce","value":0.1281}
-    ]
-  },
-  {  
-    "key":"Soup",
-    "values":[  
-  {"category":"Soup","aspect":"Food","value":0.062},{"category":"Soup","aspect":"Service","value":0.4005},{"category":"Soup","aspect":"Environment","value":0.4417},{"category":"Soup","aspect":"Variety","value":0.2215},{"category":"Soup","aspect":"Drink","value":0.1132},{"category":"Soup","aspect":"Sauce","value":0.1368}
     ]
   },
   {  
